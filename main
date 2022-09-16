@@ -1,0 +1,190 @@
+import time
+class bikerental:
+
+    def __init__(self, stock=0):
+        self.stock=stock
+    
+    def displaystock(self):
+        print("Şu anda {} bisiklet mevcut".format(self.stock))
+        return self.stock
+
+    def hourlyrental(self, n):
+        if n<=0:
+            print("Bisiklet sayısı pozitif olmalı.")
+            return None
+       
+        elif n>self.stock:
+            print("Maalesef. Mevcut bisiklet sayısı {}.".format(self.stock))
+            return None
+        
+        else:
+            now=time.ctime(time.time())
+            print("{} saatinde {} adet bisikleti saatlik olarak kiraladınız".format(now.hour, n))
+            print("Her bir bisiklet için 7.5 TL üzerinden ücretlendirilir.\nİyi eğlenceler.")
+
+    def dailyrental(self, n):
+        if n<=0:
+            print("Bisiklet sayısı pozitif olmalı.")
+            return None
+       
+        elif n>self.stock:
+            print("Maalesef. Mevcut bisiklet sayısı {}.".format(self.stock))
+            return None
+        
+        else:
+            now=time.ctime(time.time())
+            print("{} saatinde {} adet bisikleti günlük olarak kiraladınız".format(now, n))
+            print("Her bir bisiklet için 20 TL üzerinden ücretlendirilir.\nİyi eğlenceler.")
+
+            self.stock -=n
+            return now
+    
+    def weeklyrental(self, n):
+        if n<=0:
+            print("Bisiklet sayısı pozitif olmalı.")
+            return None
+       
+        elif n>self.stock:
+            print("Maalesef. Mevcut bisiklet sayısı {}.".format(self.stock))
+            return None
+        
+        else:
+            now=time.ctime(time.time())
+            print("{} saatinde {} adet bisikleti haftalık olarak kiraladınız".format(now, n))
+            print("Her bir bisiklet için 75 TL üzerinden ücretlendirilir.\nİyi eğlenceler.")
+
+            self.stock -=n
+            return now
+    
+    def returnbike(self, request):
+        rentaltime, rentaltype, numberofbikes = request
+        bill=0
+
+        if rentaltime and rentaltype and numberofbikes:
+            self.stock += numberofbikes
+            now=time.ctime(time.time())
+            rentalperiod= rentaltime - now
+
+            if rentaltype==1:
+                bill=round(rentalperiod.seconds/3600) * 7.5 * numberofbikes
+
+            elif rentaltype==2:
+                bill=round(rentalperiod.days) * 20 * numberofbikes
+            
+            print("Bisikletinizi iade ettiğiniz için teşşekür ederiz.\nÖdemeniz gereken tutar {} TL.".format(bill))
+            return bill
+        
+        else:
+            print("Bisikletinizi kiraladığınıza emin misiniz?")
+            return None
+
+
+class Customer:
+    def __init__(self):
+        self.bikes=0
+        self.rentaltype=0
+        self.rentaltime=0
+        self.bill=0
+
+    def request(self):
+        bikes=int(input("Kaç adet bisiklet kiralamak istiyorsunuz?"))
+
+        try:
+            bikes=int(bikes)
+        except ValueError:
+            print("Girdiğiniz sayı pozitif olmalı.")
+            return -1
+
+        if bikes<1:
+            print("Geçersiz giriş. Bisiklet sayısı 0'dan büyük olmalı.")
+            return -1
+
+        else:
+            self.bikes=bikes
+        
+        return self.bikes
+
+    def returnbike(self):
+        if self.rentaltype and self.rentaltime and self.bikes:
+            return self.rentaltime, self.rentaltype, self.bikes
+        
+        else:
+            return 0,0,0
+
+
+def cikti_olustur(secim, bill):
+    kayit_tarihi=time.ctime(time.time())
+    t1=f"Yapılan seçim {secim}\n"
+    t2=f"Ödenen miktar {bill}\n"
+    t3=f"Oluşturulma tarihi {kayit_tarihi}\n"
+
+    output=t1+t2+t3
+    return output
+
+
+def main():
+    shop = bikerental(250)
+    customer = Customer()
+    
+    while True:
+        print("""
+        **************YetBike Bisiklet Kiralama************
+        1. Mevcut bisikletleri göster
+        2. Saatlik 7.5 TL karşılığında bisiklet talep edin
+        3. Günlük 25 TL karşılığında bisiklet talep edin
+        4. Haftalık 75 TL karşılığında bisiklet talep edin
+        5. Bisikleti iade edin
+        6. Çıkış
+        """)
+        
+        secim=int(input("Lütfen tercihinizi giriniz: "))
+        
+        try:
+            secim=int(secim)
+        
+        except ValueError:
+            print("Yanlış tercih yaptınız.")
+            continue
+        
+        if secim==1:
+            shop.displaystock()
+            
+        elif secim==2:
+            customer.rentaltime=shop.hourlyrental(customer.request())
+            customer.rentaltype=1
+        
+        elif secim==3:
+            customer.rentaltime=shop.dailyrental(customer.request())
+            customer.rentaltype=2
+            
+        elif secim==4:
+            customer.rentaltime=shop.weeklyrental(customer.request())
+            customer.rentaltype=3
+            
+        elif secim==5:
+            customer.bill=shop.returnbike(customer.returnbike())
+            customer.rentaltype, customer.rentaltime, customer.bikes=0,0,0
+        
+        elif secim==6:
+            break
+        
+        else:
+            print("Geçersiz giriş yaptınız.\nLütfen 1 ve 6 arasında seçim yapınız.")
+            
+        output=cikti_olustur(secim, bill=0)
+
+        with open ("YetBike.txt", "a") as f:
+            f.write(str(time.ctime(time.time())))
+            f.write("\n")
+            f.write(output)
+            f.write("\n")
+            f.write("Kullanıcı bilgileri kaydedildi.")
+            f.write("\n")
+            f.write("*"*20)
+            
+    
+    print("Veriler 'YetBike.txt' dosyasına kaydedildi.")
+    print("YetBike Bisiklet Kiralamayı tercih ettiğiniz için teşekkür ederiz!")
+
+if __name__=="__main__":
+    main()
