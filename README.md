@@ -18,6 +18,3 @@ Nesne yönelimli programlama kullanılarak Python'da uygulanan YetBike Bisiklet 
 - Kullanıcı bisikleti iade etmeye karar verdiğinde seçilen tarifeye uygun fatura düzenleyebilir,
 - Anlık mevcut bisiklet sayısını gösterebilir,
 - Stokları anlık doğrulayarak saatlik, günlük ve haftalık olarak bisiklet kiralama talep alabilir.
-
-
-Basitlik açısından, herhangi bir müşterinin yalnızca bir tür kiralama talep ettiğini, yani saatlik, aylık veya haftalık olarak, ancak istediği bisiklet sayısını seçmekte özgür olduğunu varsayıyoruz.
