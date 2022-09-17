@@ -1,6 +1,6 @@
 # YetBike_Bisiklet_Kiralama
 
-Nesne yönelimli programlama kullanılarak Python'da uygulanan YetBike Bisiklet Kiralama, kullanıcının istediği saatte ve sayıda bisikleti saatlik, günlük ve haftalık olarak kiralayabileceği bir bisiklet kiralama sistemi.
+Nesne yönelimli programlama kullanılarak Python'da uygulanan YetBike Bisiklet Kiralama, kullanıcının istediği saatte ve sayıda bisikleti saatlik, günlük ve haftalık olarak kiralayabileceği bir bisiklet kiralama sistemidir.
 
 ------
 
