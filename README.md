@@ -4,7 +4,7 @@ Nesne yönelimli programlama kullanılarak Python'da uygulanan YetBike Bisiklet 
 
 ------
 
-## Kulllanıcılar;
+## Kullanıcılar;
 
 - Mağazadaki mevcut bisiklet sayısını görebilir,
 - Bisikletleri saatlik olarak 7.5 TL karşılında kiralayabilir,
